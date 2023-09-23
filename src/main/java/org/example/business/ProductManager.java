@@ -1,15 +1,20 @@
 package org.example.business;
 
+import org.example.core.logging.Logger;
 import org.example.dataAccess.ProductDao;
 import org.example.entities.Product;
+
+import java.util.List;
 
 public class ProductManager {
 
     //iş kuralları
     private ProductDao productDao;
+    private List<Logger> loggers;
 
-    public ProductManager(ProductDao productDao) {
+    public ProductManager(ProductDao productDao,List<Logger> loggers) {
         this.productDao = productDao;
+        this.loggers=loggers;
     }
 
 
@@ -19,5 +24,11 @@ public class ProductManager {
         }
 
         productDao.add(product);
+
+        for (Logger logger:loggers){
+            logger.log(product.getName());
+        }
+
+
     }
 }
